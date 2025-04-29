@@ -29,7 +29,7 @@ extension DependencyValues {
     }
 }
 
-struct Hotel {
+struct Hotel: Equatable {
     let name: String
 }
 
@@ -46,10 +46,27 @@ func loadImage() async -> UIImage {
 }
 
 @Reducer
+struct HotelReducer {
+    @ObservableState
+    struct State: Identifiable, Equatable {
+        var id = UUID()
+        var hotel: Hotel = .init(name: "")
+    }
+    
+    enum Action {
+        case some
+    }
+
+    var body: some Reducer<State, Action> {
+        EmptyReducer()
+    }
+}
+
+@Reducer
 struct HotelsReducer {
     @ObservableState
     struct State {
-        var hotels: [Hotel] = .init()
+        var hotels: IdentifiedArrayOf<HotelReducer.State> = .init()
     }
     
     enum Action {
@@ -70,7 +87,9 @@ struct HotelsReducer {
                     await send(.hotelsLoaded(hotels))
                 }
             case .hotelsLoaded(let hotels):
-                state.hotels = hotels
+                state.hotels = IdentifiedArrayOf<HotelReducer.State>(hotels.map {
+                    .init(hotel: $0)
+                })
                 return .none
             case .hotelSelected(let hotel):
                 return .run { send in
@@ -122,6 +141,6 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        store.send(.hotelSelected(store.state.hotels[indexPath.item]))
+        store.send(.hotelSelected(store.state.hotels[indexPath.item].hotel))
     }
 }
