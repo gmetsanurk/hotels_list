@@ -8,6 +8,27 @@
 import UIKit
 import ComposableArchitecture
 
+protocol DataSource {
+    func fetchHotels() async throws -> [Hotel]
+}
+
+struct SomeAPIDataSource: DataSource {
+    func fetchHotels() async throws -> [Hotel] {
+        [.init(name: "Hello")]
+    }
+}
+
+extension DependencyValues {
+    var dataSource: any DataSource {
+        get { self[DataSourceKey.self] }
+        set { self[DataSourceKey.self] = newValue }
+    }
+
+    private enum DataSourceKey: DependencyKey {
+      static let liveValue: any DataSource = SomeAPIDataSource()
+    }
+}
+
 struct Hotel {
     let name: String
 }
@@ -32,13 +53,25 @@ struct HotelsReducer {
     }
     
     enum Action {
+        case start
+        case hotelsLoaded([Hotel])
         case hotelSelected(Hotel)
         case imageReceived(UIImage, Hotel)
     }
     
+    @Dependency(\.dataSource) var dataSource
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .start:
+                return .run { send in
+                    let hotels = try await dataSource.fetchHotels()
+                    await send(.hotelsLoaded(hotels))
+                }
+            case .hotelsLoaded(let hotels):
+                state.hotels = hotels
+                return .none
             case .hotelSelected(let hotel):
                 return .run { send in
                     let image = await loadImage()
@@ -67,10 +100,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        observe { [weak self] in
+            // self?.tableView.reloadData()
+            print(self?.store.state.hotels)
+        }
+        
         view.backgroundColor = .white
+        store.send(.start)
     }
-
-
 }
 
 extension ViewController: UICollectionViewDataSource {
