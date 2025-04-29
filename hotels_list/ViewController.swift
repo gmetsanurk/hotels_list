@@ -12,6 +12,18 @@ struct Hotel {
     let name: String
 }
 
+struct Coordinator {
+    func open(hotel: Hotel) {
+        
+    }
+}
+
+let coordinator = Coordinator()
+
+func loadImage() async -> UIImage {
+    UIImage(data: Data())!
+}
+
 @Reducer
 struct HotelsReducer {
     @ObservableState
@@ -20,13 +32,20 @@ struct HotelsReducer {
     }
     
     enum Action {
-        case some
+        case hotelSelected(Hotel)
+        case imageReceived(UIImage, Hotel)
     }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .some:
+            case .hotelSelected(let hotel):
+                return .run { send in
+                    let image = await loadImage()
+                    await send(.imageReceived(image, hotel))
+                }
+            case .imageReceived(let image, let hotel):
+                coordinator.open(hotel: hotel)
                 return .none
             }
         }
@@ -54,3 +73,18 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        store.state.hotels.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        UICollectionViewCell()
+    }
+}
+
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        store.send(.hotelSelected(store.state.hotels[indexPath.item]))
+    }
+}
