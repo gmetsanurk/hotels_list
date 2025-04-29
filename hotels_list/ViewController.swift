@@ -87,7 +87,7 @@ struct HotelsReducer {
                     await send(.hotelsLoaded(hotels))
                 }
             case .hotelsLoaded(let hotels):
-                state.hotels = IdentifiedArrayOf<HotelReducer.State>(hotels.map {
+                state.hotels = IdentifiedArrayOf<HotelReducer.State>(uniqueElements: hotels.map {
                     .init(hotel: $0)
                 })
                 return .none
