@@ -21,7 +21,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setupWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let homeVC = ViewController()
+        let homeVC = ViewController(store: .init(initialState: .init(), reducer: {
+            HotelsReducer()
+        }))
         window?.rootViewController = homeVC
         window?.makeKeyAndVisible()
     }
