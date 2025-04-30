@@ -14,7 +14,19 @@ protocol DataSource {
 
 struct SomeAPIDataSource: DataSource {
     func fetchHotels() async throws -> [Hotel] {
-        [.init(name: "Hello")]
+        [.init(
+          hotelSummary: .init(
+            id: UUID(),
+            name: "–",
+            address: "–",
+            stars: nil,
+            distance: 0,
+            suitesAvailability: []
+          ),
+          image: nil,
+          latitude: 0,
+          longitude: 0
+        )]
     }
 }
 
@@ -29,10 +41,6 @@ extension DependencyValues {
     }
 }
 
-struct Hotel: Equatable {
-    let name: String
-}
-
 struct Coordinator {
     func open(hotel: Hotel) {
         
@@ -43,65 +51,6 @@ let coordinator = Coordinator()
 
 func loadImage() async -> UIImage {
     UIImage(data: Data())!
-}
-
-@Reducer
-struct HotelReducer {
-    @ObservableState
-    struct State: Identifiable, Equatable {
-        var id = UUID()
-        var hotel: Hotel = .init(name: "")
-    }
-    
-    enum Action {
-        case some
-    }
-
-    var body: some Reducer<State, Action> {
-        EmptyReducer()
-    }
-}
-
-@Reducer
-struct HotelsReducer {
-    @ObservableState
-    struct State {
-        var hotels: IdentifiedArrayOf<HotelReducer.State> = .init()
-    }
-    
-    enum Action {
-        case start
-        case hotelsLoaded([Hotel])
-        case hotelSelected(Hotel)
-        case imageReceived(UIImage, Hotel)
-    }
-    
-    @Dependency(\.dataSource) var dataSource
-    
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .start:
-                return .run { send in
-                    let hotels = try await dataSource.fetchHotels()
-                    await send(.hotelsLoaded(hotels))
-                }
-            case .hotelsLoaded(let hotels):
-                state.hotels = IdentifiedArrayOf<HotelReducer.State>(uniqueElements: hotels.map {
-                    .init(hotel: $0)
-                })
-                return .none
-            case .hotelSelected(let hotel):
-                return .run { send in
-                    let image = await loadImage()
-                    await send(.imageReceived(image, hotel))
-                }
-            case .imageReceived(let image, let hotel):
-                coordinator.open(hotel: hotel)
-                return .none
-            }
-        }
-    }
 }
 
 class ViewController: UIViewController {
