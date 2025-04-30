@@ -14,7 +14,19 @@ protocol DataSource {
 
 struct SomeAPIDataSource: DataSource {
     func fetchHotels() async throws -> [Hotel] {
-        [.init(name: "Hello")]
+        [.init(
+          hotelSummary: .init(
+            id: UUID(),
+            name: "–",
+            address: "–",
+            stars: nil,
+            distance: 0,
+            suitesAvailability: []
+          ),
+          image: nil,
+          latitude: 0,
+          longitude: 0
+        )]
     }
 }
 

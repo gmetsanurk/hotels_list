@@ -8,6 +8,8 @@
 import UIKit
 import ComposableArchitecture
 
+typealias Hotel = HotelDetail
+
 @Reducer
 struct HotelsReducer {
     @ObservableState

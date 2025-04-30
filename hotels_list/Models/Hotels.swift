@@ -7,11 +7,30 @@
 
 import Foundation
 
-struct Hotels {
+class HotelSummary: Equatable {
+    
     let id: UUID
     let name: String
     let address: String
-    let stars: Double
+    let stars: Double?
     let distance: Double
-    let suitesAvailability: String
+    let suitesAvailability: [Int]
+    
+    init(id: UUID, name: String, address: String, stars: Double?, distance: Double, suitesAvailability: [Int]) {
+        self.id = id
+        self.name = name
+        self.address = address
+        self.stars = stars
+        self.distance = distance
+        self.suitesAvailability = suitesAvailability
+    }
+    
+    static func == (lhs: HotelSummary, rhs: HotelSummary) -> Bool {
+        return lhs.id == rhs.id
+        && lhs.name == rhs.name
+        && lhs.address == rhs.address
+        && lhs.stars == rhs.stars
+        && lhs.distance == rhs.distance
+        && lhs.suitesAvailability == rhs.suitesAvailability
+    }
 }
