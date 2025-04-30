@@ -29,10 +29,6 @@ extension DependencyValues {
     }
 }
 
-struct Hotel: Equatable {
-    let name: String
-}
-
 struct Coordinator {
     func open(hotel: Hotel) {
         
@@ -43,23 +39,6 @@ let coordinator = Coordinator()
 
 func loadImage() async -> UIImage {
     UIImage(data: Data())!
-}
-
-@Reducer
-struct HotelReducer {
-    @ObservableState
-    struct State: Identifiable, Equatable {
-        var id = UUID()
-        var hotel: Hotel = .init(name: "")
-    }
-    
-    enum Action {
-        case some
-    }
-
-    var body: some Reducer<State, Action> {
-        EmptyReducer()
-    }
 }
 
 class ViewController: UIViewController {
