@@ -50,4 +50,17 @@ final class NetworkManager {
         }
         return try await fetchJSON(from: url)
     }
+    
+    func fetchImageData(fileName: String) async throws -> Data {
+        guard let url = URL(string: "\(jsonBaseURL)/\(fileName).json") else {
+            throw NetworkError.invalidUrl
+        }
+        let (data, response) = try await urlSession.data(from: url)
+        guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
+            throw NetworkError.invalidResponse
+        }
+        return data
+    }
+    
+    
 }
