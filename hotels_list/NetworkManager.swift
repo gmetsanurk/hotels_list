@@ -43,4 +43,11 @@ final class NetworkManager {
         }
         return try await fetchJSON(from: url)
     }
+    
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail {
+        guard let url = URL(string: "\(jsonBaseURL)/\(id).json") else {
+            throw NetworkError.invalidUrl
+        }
+        return try await fetchJSON(from: url)
+    }
 }
