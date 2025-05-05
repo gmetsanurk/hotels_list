@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HotelSummary: Equatable {
+class HotelSummary: Equatable, Codable {
     
     let id: UUID
     let name: String
