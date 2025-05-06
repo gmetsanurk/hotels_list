@@ -15,9 +15,6 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
-    static let shared = NetworkManager()
-    private init() {}
-    
     private let jsonBaseURL = "https://raw.githubusercontent.com/iMofas/ios-android-test/master"
     private let imageBaseURL = "https://github.com/iMofas/ios-android-test/raw/master"
     

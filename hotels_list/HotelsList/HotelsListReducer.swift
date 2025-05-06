@@ -20,7 +20,7 @@ struct HotelsListReducer {
     
     enum Action {
         case start
-        case hotelsLoaded([Hotel])
+        case hotelsLoaded([HotelSummary])
         case hotelSelected(Hotel)
         case imageReceived(UIImage, Hotel)
     }
@@ -32,12 +32,12 @@ struct HotelsListReducer {
             switch action {
             case .start:
                 return .run { send in
-                    let hotels = try await dataSource.fetchHotels()
+                    let hotels = try await dataSource.fetchHotelList()
                     await send(.hotelsLoaded(hotels))
                 }
             case .hotelsLoaded(let hotels):
                 state.hotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: hotels.map {
-                    .init(hotel: $0)
+                    .init(id: $0.id, summary: $0)
                 })
                 return .none
             case .hotelSelected(let hotel):
@@ -50,5 +50,13 @@ struct HotelsListReducer {
                 return .none
             }
         }
+    }
+    
+    private func loadImage(fileName: String) async throws -> UIImage {
+        let data = try await dataSource.fetchImageData(fileName: fileName)
+        guard let image = UIImage(data: data) else {
+            throw NetworkError.invalidImageData
+        }
+        return image
     }
 }

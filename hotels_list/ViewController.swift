@@ -8,25 +8,24 @@
 import UIKit
 import ComposableArchitecture
 
+// TODO: a separate file for DataSource
 protocol DataSource {
-    func fetchHotels() async throws -> [Hotel]
+    func fetchHotelList() async throws -> [HotelSummary]
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail
+    func fetchImageData(fileName: String) async throws -> Data
 }
 
 struct SomeAPIDataSource: DataSource {
-    func fetchHotels() async throws -> [Hotel] {
-        [.init(
-          hotelSummary: .init(
-            id: UUID(),
-            name: "–",
-            address: "–",
-            stars: nil,
-            distance: 0,
-            suitesAvailability: []
-          ),
-          image: nil,
-          latitude: 0,
-          longitude: 0
-        )]
+    func fetchHotelList() async throws -> [HotelSummary] {
+        [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: [])]
+    }
+    
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail {
+        .init(hotelSummary: .init(id: .init(), name: "", address: "", stars: nil, distance: 0, suitesAvailability: []), image: nil, latitude: 0, longitude: 0)
+    }
+    
+    func fetchImageData(fileName: String) async throws -> Data {
+        .init()
     }
 }
 
@@ -41,6 +40,7 @@ extension DependencyValues {
     }
 }
 
+// TODO: a separate file for Coordinator
 struct Coordinator {
     func open(hotel: Hotel) {
         
@@ -48,16 +48,6 @@ struct Coordinator {
 }
 
 let coordinator = Coordinator()
-
-let networkManager = NetworkManager.shared
-
-func loadImage(fileName: String) async throws -> UIImage {
-    let data = try await networkManager.fetchImageData(fileName: fileName)
-    guard let image = UIImage(data: data) else {
-        throw NetworkError.invalidImageData
-    }
-    return image
-}
 
 class ViewController: UIViewController {
     private let store: StoreOf<HotelsListReducer>

@@ -13,7 +13,6 @@ struct HotelDetailReducer {
     @ObservableState
     struct State: Identifiable, Equatable {
         var id = UUID()
-        var summary: HotelSummary
         var hotel: Hotel
         
         init(
@@ -22,7 +21,6 @@ struct HotelDetailReducer {
             hotel: Hotel? = nil
           ) {
             self.id = id
-            self.summary = summary
             // если hotel не передали — создаём его на основе готового summary
             self.hotel = hotel ?? .init(hotelSummary: summary, image: "", latitude: 0.0, longitude: 0.0)
           }
