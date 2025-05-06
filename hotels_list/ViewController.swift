@@ -15,13 +15,14 @@ protocol DataSource {
     func fetchImageData(fileName: String) async throws -> Data
 }
 
+// TODO: you can use this for tests
 struct SomeAPIDataSource: DataSource {
     func fetchHotelList() async throws -> [HotelSummary] {
-        [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: [])]
+        [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: "")]
     }
     
     func fetchHotelDetail(id: Int) async throws -> HotelDetail {
-        .init(hotelSummary: .init(id: .init(), name: "", address: "", stars: nil, distance: 0, suitesAvailability: []), image: nil, latitude: 0, longitude: 0)
+        .init(hotelSummary: .init(id: .init(), name: "", address: "", stars: nil, distance: 0, suitesAvailability: ""), image: nil, latitude: 0, longitude: 0)
     }
     
     func fetchImageData(fileName: String) async throws -> Data {
@@ -36,7 +37,7 @@ extension DependencyValues {
     }
 
     private enum DataSourceKey: DependencyKey {
-      static let liveValue: any DataSource = SomeAPIDataSource()
+      static let liveValue: any DataSource = NetworkManager()
     }
 }
 

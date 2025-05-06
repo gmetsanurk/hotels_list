@@ -14,7 +14,7 @@ enum NetworkError: Error {
     case invalidImageData
 }
 
-final class NetworkManager {
+final class NetworkManager: DataSource {
     private let jsonBaseURL = "https://raw.githubusercontent.com/iMofas/ios-android-test/master"
     private let imageBaseURL = "https://github.com/iMofas/ios-android-test/raw/master"
     

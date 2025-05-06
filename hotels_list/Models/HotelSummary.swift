@@ -9,14 +9,14 @@ import Foundation
 
 class HotelSummary: Codable, Equatable {
     
-    let id: UUID
-    let name: String
-    let address: String
+    let id: UUID?
+    let name: String?
+    let address: String?
     let stars: Double?
-    let distance: Double
-    let suitesAvailability: [Int]
+    let distance: Double?
+    let suitesAvailability: String?
     
-    init(id: UUID, name: String, address: String, stars: Double?, distance: Double, suitesAvailability: [Int]) {
+    init(id: UUID, name: String, address: String, stars: Double?, distance: Double, suitesAvailability: String?) {
         self.id = id
         self.name = name
         self.address = address

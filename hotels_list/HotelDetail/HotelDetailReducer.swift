@@ -17,7 +17,7 @@ struct HotelDetailReducer {
         
         init(
             id: UUID = .init(),
-            summary: HotelSummary = .init(id: UUID(0), name: "", address: "", stars: 0.0, distance: 0.0, suitesAvailability: [0]),
+            summary: HotelSummary = .init(id: UUID(0), name: "", address: "", stars: 0.0, distance: 0.0, suitesAvailability: ""),
             hotel: Hotel? = nil
           ) {
             self.id = id
