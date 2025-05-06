@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 enum NetworkError: Error {
     case invalidUrl
@@ -66,13 +65,5 @@ final class NetworkManager {
             throw NetworkError.invalidResponse
         }
         return data
-    }
-    
-    func fetchImage(fileName: String) async throws -> UIImage {
-        let data = try await fetchImageData(fileName: fileName)
-        guard let image = UIImage(data: data) else {
-            throw NetworkError.invalidImageData
-        }
-        return image
     }
 }
