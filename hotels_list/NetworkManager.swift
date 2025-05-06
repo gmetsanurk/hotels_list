@@ -20,7 +20,7 @@ final class NetworkManager: DataSource {
     
     private let urlSession = URLSession.shared
     
-    private func fetchJSON<T: Decodable>(from url: URL) async throws -> T {
+    private func fetchJSON<T: Codable>(from url: URL) async throws -> T {
         let (data, response) = try await urlSession.data(from: url)
         guard let httpResponse = response as? HTTPURLResponse, 200...299 ~= httpResponse.statusCode else {
             throw NetworkError.invalidResponse
