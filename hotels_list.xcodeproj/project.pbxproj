@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6604834A2DC9FBE800FC6A38 /* HotelSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660483492DC9FBD500FC6A38 /* HotelSortType.swift */; };
 		6604834E2DC9FC6A00FC6A38 /* HotelsListState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604834D2DC9FC6400FC6A38 /* HotelsListState.swift */; };
+		660483532DCA059D00FC6A38 /* HotelDetailAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660483522DCA059300FC6A38 /* HotelDetailAction.swift */; };
 		665382762DC0C19C00B5381D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665382722DC0C19C00B5381D /* Assets.xcassets */; };
 		665382782DC0C19C00B5381D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665382712DC0C19C00B5381D /* AppDelegate.swift */; };
 		665382792DC0C19C00B5381D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665382742DC0C19C00B5381D /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		660483492DC9FBD500FC6A38 /* HotelSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelSortType.swift; sourceTree = "<group>"; };
 		6604834D2DC9FC6400FC6A38 /* HotelsListState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsListState.swift; sourceTree = "<group>"; };
+		660483522DCA059300FC6A38 /* HotelDetailAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelDetailAction.swift; sourceTree = "<group>"; };
 		665382492DC0B55B00B5381D /* hotels_list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hotels_list.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		665382712DC0C19C00B5381D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		665382722DC0C19C00B5381D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		660483512DCA009100FC6A38 /* HotelDetail */ = {
 			isa = PBXGroup;
 			children = (
+				660483522DCA059300FC6A38 /* HotelDetailAction.swift */,
 				665382842DC212A000B5381D /* HotelDetailReducer.swift */,
 			);
 			path = HotelDetail;
@@ -86,9 +89,9 @@
 			children = (
 				660483502DCA008900FC6A38 /* HotelsList */,
 				660483512DCA009100FC6A38 /* HotelDetail */,
-				6653828B2DC28CAB00B5381D /* NetworkManager.swift */,
 				665382712DC0C19C00B5381D /* AppDelegate.swift */,
 				665382742DC0C19C00B5381D /* ViewController.swift */,
+				6653828B2DC28CAB00B5381D /* NetworkManager.swift */,
 				665382812DC2126400B5381D /* Models */,
 				665382722DC0C19C00B5381D /* Assets.xcassets */,
 				665382732DC0C19C00B5381D /* Info.plist */,
@@ -183,6 +186,7 @@
 			files = (
 				665382852DC212A400B5381D /* HotelDetailReducer.swift in Sources */,
 				665382802DC2062B00B5381D /* HotelsListReducer.swift in Sources */,
+				660483532DCA059D00FC6A38 /* HotelDetailAction.swift in Sources */,
 				6604834E2DC9FC6A00FC6A38 /* HotelsListState.swift in Sources */,
 				6653828C2DC28CAE00B5381D /* NetworkManager.swift in Sources */,
 				665382782DC0C19C00B5381D /* AppDelegate.swift in Sources */,
