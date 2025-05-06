@@ -9,6 +9,7 @@ import UIKit
 import ComposableArchitecture
 
 typealias Hotel = HotelDetail
+var imageName = "N"
 
 @Reducer
 struct HotelsReducer {
@@ -41,7 +42,7 @@ struct HotelsReducer {
                 return .none
             case .hotelSelected(let hotel):
                 return .run { send in
-                    let image = await loadImage()
+                    let image = try await loadImage(fileName: imageName)
                     await send(.imageReceived(image, hotel))
                 }
             case .imageReceived(let image, let hotel):

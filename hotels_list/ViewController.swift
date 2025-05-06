@@ -49,8 +49,14 @@ struct Coordinator {
 
 let coordinator = Coordinator()
 
-func loadImage() async -> UIImage {
-    UIImage(data: Data())!
+let networkManager = NetworkManager.shared
+
+func loadImage(fileName: String) async throws -> UIImage {
+    let data = try await networkManager.fetchImageData(fileName: fileName)
+    guard let image = UIImage(data: data) else {
+        throw NetworkError.invalidImageData
+    }
+    return image
 }
 
 class ViewController: UIViewController {
