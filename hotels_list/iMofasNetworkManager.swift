@@ -14,7 +14,7 @@ enum NetworkError: Error {
     case invalidImageData
 }
 
-final class NetworkManager: DataSource {
+final class iMofasNetworkManager: DataSource {
     private let jsonBaseURL = "https://raw.githubusercontent.com/iMofas/ios-android-test/master"
     private let imageBaseURL = "https://github.com/iMofas/ios-android-test/raw/master"
     
@@ -34,11 +34,11 @@ final class NetworkManager: DataSource {
         }
     }
     
-    func fetchHotelList() async throws -> [HotelSummary] {
+    func fetchHotelsList() async throws -> [HotelSummary] {
         guard let url = URL(string: "\(jsonBaseURL)/0777.json") else {
             throw NetworkError.invalidUrl
         }
-        return try await fetchJSON(from: url)
+        return try await fetchJSON(from: url) as [HotelSummary]
     }
     
     func fetchHotelDetail(id: Int) async throws -> HotelDetail {

@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 // TODO: a separate file for DataSource
 protocol DataSource: Sendable {
-    func fetchHotelList() async throws -> [HotelSummary]
+    func fetchHotelsList() async throws -> [HotelSummary]
     func fetchHotelDetail(id: Int) async throws -> HotelDetail
     func fetchImageData(fileName: String) async throws -> Data
 }
@@ -21,7 +21,7 @@ protocol LocalDataSource: DataSource {
 
 // TODO: you can use this for tests
 struct SomeAPIDataSource: DataSource {
-    func fetchHotelList() async throws -> [HotelSummary] {
+    func fetchHotelsList() async throws -> [HotelSummary] {
         [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: "")]
     }
     
@@ -35,7 +35,7 @@ struct SomeAPIDataSource: DataSource {
 }
 
 struct SomeLocal: LocalDataSource {
-    func fetchHotelList() async throws -> [HotelSummary] {
+    func fetchHotelsList() async throws -> [HotelSummary] {
         [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: "")]
     }
     
@@ -59,7 +59,7 @@ extension DependencyValues {
     }
 
     private enum DataSourceKey: DependencyKey {
-      static let liveValue: any DataSource = NetworkManager()
+      static let liveValue: any DataSource = iMofasNetworkManager()
     }
 }
 
