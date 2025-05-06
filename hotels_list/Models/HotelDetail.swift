@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct HotelDetail: Codable {
+struct HotelDetail: Codable, Equatable {
     
     let hotelSummary: HotelSummary
     let image: String?
