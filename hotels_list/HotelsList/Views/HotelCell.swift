@@ -21,6 +21,28 @@ class HotelCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupUI() {
+        nameLabel.font = .boldSystemFont(ofSize: 16)
+        nameLabel.numberOfLines = 2
+        distanceLabel.font = .systemFont(ofSize: 14)
+        availabilityLabel.font = .systemFont(ofSize: 14)
+        
+        let stack = UIStackView(arrangedSubviews: [nameLabel, distanceLabel, availabilityLabel])
+        stack.axis = .vertical
+        stack.spacing = 4
+        contentView.addSubview(stack)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            stack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -8)
+        ])
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.systemGray4.cgColor
+        contentView.layer.cornerRadius = 8
+    }
+    
     func configure(with summary: HotelSummary) {
         nameLabel.text = summary.name
         if let dist = summary.distance {
