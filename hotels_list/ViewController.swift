@@ -74,13 +74,6 @@ extension DependencyValues {
     }
 }
 
-// TODO: a separate file for Coordinator
-struct Coordinator {
-    func open(hotel: Hotel) {
-        
-    }
-}
-
 let coordinator = Coordinator()
 
 class ViewController: UIViewController {
