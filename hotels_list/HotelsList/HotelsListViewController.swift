@@ -32,7 +32,7 @@ extension DependencyValues {
 
 let coordinator = Coordinator()
 
-class ViewController: UIViewController {
+class HotelsListViewController: UIViewController {
     private let store: StoreOf<HotelsListReducer>
     
     init(store: StoreOf<HotelsListReducer>) {
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension HotelsListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         store.state.hotels.count
     }
@@ -67,7 +67,7 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-extension ViewController: UICollectionViewDelegate {
+extension HotelsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         store.send(.hotelSelected(store.state.hotels[indexPath.item].hotel))
     }
