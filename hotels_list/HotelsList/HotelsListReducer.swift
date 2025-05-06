@@ -9,7 +9,7 @@ import UIKit
 import ComposableArchitecture
 
 typealias Hotel = HotelDetail
-var imageName = "N"
+let imageName = "N"
 
 @Reducer
 struct HotelsListReducer {

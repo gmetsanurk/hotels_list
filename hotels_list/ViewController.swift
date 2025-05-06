@@ -9,7 +9,7 @@ import UIKit
 import ComposableArchitecture
 
 // TODO: a separate file for DataSource
-protocol DataSource {
+protocol DataSource: Sendable {
     func fetchHotelList() async throws -> [HotelSummary]
     func fetchHotelDetail(id: Int) async throws -> HotelDetail
     func fetchImageData(fileName: String) async throws -> Data
