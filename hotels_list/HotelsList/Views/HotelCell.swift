@@ -7,6 +7,9 @@
 
 import UIKit
 
+let magicNumber: CGFloat = 8
+let magicFontSize: CGFloat = 14
+
 class HotelCell: UICollectionViewCell {
     static let reuseID = "HotelCell"
     private let nameLabel = UILabel()
@@ -15,6 +18,7 @@ class HotelCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
@@ -24,8 +28,8 @@ class HotelCell: UICollectionViewCell {
     private func setupUI() {
         nameLabel.font = .boldSystemFont(ofSize: 16)
         nameLabel.numberOfLines = 2
-        distanceLabel.font = .systemFont(ofSize: 14)
-        availabilityLabel.font = .systemFont(ofSize: 14)
+        distanceLabel.font = .systemFont(ofSize: magicFontSize)
+        availabilityLabel.font = .systemFont(ofSize: magicFontSize)
         
         let stack = UIStackView(arrangedSubviews: [nameLabel, distanceLabel, availabilityLabel])
         stack.axis = .vertical
@@ -33,14 +37,14 @@ class HotelCell: UICollectionViewCell {
         contentView.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            stack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -8)
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: magicNumber),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: magicNumber),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -magicNumber),
+            stack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -magicNumber)
         ])
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.systemGray4.cgColor
-        contentView.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = magicNumber
     }
     
     func configure(with summary: HotelSummary) {
