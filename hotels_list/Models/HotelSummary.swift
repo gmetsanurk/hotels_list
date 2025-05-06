@@ -8,7 +8,7 @@
 import Foundation
 
 struct HotelSummary: Codable, Equatable, Sendable {
-    let id: UUID?
+    let id: Int
     let name: String?
     let address: String?
     let stars: Double?

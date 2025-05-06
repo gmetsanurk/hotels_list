@@ -8,18 +8,9 @@ import Foundation
 import ComposableArchitecture
 
 @ObservableState
-struct HotelsListState {
+struct HotelsListState: Equatable {
   var hotels: IdentifiedArrayOf<HotelDetailReducer.State> = .init()
   var isLoading: Bool = false
   var sortType: HotelSortType = .server
   var alertMessage: String?
-}
-
-extension HotelsListState: Equatable {
-    static func == (lhs: HotelsListState, rhs: HotelsListState) -> Bool {
-        lhs.hotels == rhs.hotels
-         && lhs.isLoading == rhs.isLoading
-         && lhs.sortType == rhs.sortType
-         && lhs.alertMessage == rhs.alertMessage
-    }
 }

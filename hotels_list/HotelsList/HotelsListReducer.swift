@@ -21,7 +21,7 @@ struct HotelsListReducer {
             switch action {
             case .start:
                 return .run { send in
-                    let hotels = try await dataSource.fetchHotelList()
+                    let hotels = try await dataSource.fetchHotelsList()
                     await send(.hotelsLoaded(hotels))
                 }
             case .hotelsLoaded(let hotels):

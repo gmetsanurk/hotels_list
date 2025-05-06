@@ -21,7 +21,7 @@
 		665382832DC2127000B5381D /* HotelDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665382822DC2126E00B5381D /* HotelDetail.swift */; };
 		665382852DC212A400B5381D /* HotelDetailReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665382842DC212A000B5381D /* HotelDetailReducer.swift */; };
 		6653828A2DC2140100B5381D /* HotelSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665382892DC213FE00B5381D /* HotelSummary.swift */; };
-		6653828C2DC28CAE00B5381D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6653828B2DC28CAB00B5381D /* NetworkManager.swift */; };
+		6653828C2DC28CAE00B5381D /* iMofasNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6653828B2DC28CAB00B5381D /* iMofasNetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +40,7 @@
 		665382822DC2126E00B5381D /* HotelDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelDetail.swift; sourceTree = "<group>"; };
 		665382842DC212A000B5381D /* HotelDetailReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelDetailReducer.swift; sourceTree = "<group>"; };
 		665382892DC213FE00B5381D /* HotelSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelSummary.swift; sourceTree = "<group>"; };
-		6653828B2DC28CAB00B5381D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		6653828B2DC28CAB00B5381D /* iMofasNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMofasNetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,11 +96,11 @@
 		665382752DC0C19C00B5381D /* hotels_list */ = {
 			isa = PBXGroup;
 			children = (
+				665382712DC0C19C00B5381D /* AppDelegate.swift */,
+				6653828B2DC28CAB00B5381D /* iMofasNetworkManager.swift */,
 				660483502DCA008900FC6A38 /* HotelsList */,
 				660483512DCA009100FC6A38 /* HotelDetail */,
-				665382712DC0C19C00B5381D /* AppDelegate.swift */,
 				665382742DC0C19C00B5381D /* ViewController.swift */,
-				6653828B2DC28CAB00B5381D /* NetworkManager.swift */,
 				665382812DC2126400B5381D /* Models */,
 				665382722DC0C19C00B5381D /* Assets.xcassets */,
 				665382732DC0C19C00B5381D /* Info.plist */,
@@ -197,7 +197,7 @@
 				665382802DC2062B00B5381D /* HotelsListReducer.swift in Sources */,
 				660483532DCA059D00FC6A38 /* HotelDetailAction.swift in Sources */,
 				6604834E2DC9FC6A00FC6A38 /* HotelsListState.swift in Sources */,
-				6653828C2DC28CAE00B5381D /* NetworkManager.swift in Sources */,
+				6653828C2DC28CAE00B5381D /* iMofasNetworkManager.swift in Sources */,
 				665382782DC0C19C00B5381D /* AppDelegate.swift in Sources */,
 				660483572DCA06C400FC6A38 /* HotelsListViewController.swift in Sources */,
 				665382832DC2127000B5381D /* HotelDetail.swift in Sources */,
