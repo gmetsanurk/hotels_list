@@ -15,6 +15,10 @@ protocol DataSource: Sendable {
     func fetchImageData(fileName: String) async throws -> Data
 }
 
+protocol LocalDataSource: DataSource {
+    func save()
+}
+
 // TODO: you can use this for tests
 struct SomeAPIDataSource: DataSource {
     func fetchHotelList() async throws -> [HotelSummary] {
@@ -30,6 +34,24 @@ struct SomeAPIDataSource: DataSource {
     }
 }
 
+struct SomeLocal: LocalDataSource {
+    func fetchHotelList() async throws -> [HotelSummary] {
+        [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: "")]
+    }
+    
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail {
+        .init(hotelSummary: .init(id: .init(), name: "", address: "", stars: nil, distance: 0, suitesAvailability: ""), image: nil, latitude: 0, longitude: 0)
+    }
+    
+    func fetchImageData(fileName: String) async throws -> Data {
+        .init()
+    }
+    
+    func save() {
+        
+    }
+}
+
 extension DependencyValues {
     var dataSource: any DataSource {
         get { self[DataSourceKey.self] }
@@ -38,6 +60,17 @@ extension DependencyValues {
 
     private enum DataSourceKey: DependencyKey {
       static let liveValue: any DataSource = NetworkManager()
+    }
+}
+
+extension DependencyValues {
+    var localStorage: any LocalDataSource {
+        get { self[LocalDataSourceKey.self] }
+        set { self[LocalDataSourceKey.self] = newValue }
+    }
+
+    private enum LocalDataSourceKey: DependencyKey {
+      static let liveValue: any LocalDataSource = SomeLocal()
     }
 }
 

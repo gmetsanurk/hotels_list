@@ -14,6 +14,7 @@ let imageName = "N"
 @Reducer
 struct HotelsListReducer {
     @Dependency(\.dataSource) var dataSource
+    @Dependency(\.localStorage) var localStorage
     
     var body: some Reducer<HotelsListState, HotelsListAction> {
         Reduce { state, action in
