@@ -7,8 +7,9 @@
 import Foundation
 import ComposableArchitecture
 
+@ObservableState
 struct HotelsListState {
-  var hotels: [HotelSummary] = []
+  var hotels: IdentifiedArrayOf<HotelDetailReducer.State> = .init()
   var isLoading: Bool = false
   var sortType: HotelSortType = .server
   var alertMessage: String?

@@ -13,21 +13,9 @@ let imageName = "N"
 
 @Reducer
 struct HotelsListReducer {
-    @ObservableState
-    struct State {
-        var hotels: IdentifiedArrayOf<HotelDetailReducer.State> = .init()
-    }
-    
-    enum Action {
-        case start
-        case hotelsLoaded([HotelSummary])
-        case hotelSelected(Hotel)
-        case imageReceived(UIImage, Hotel)
-    }
-    
     @Dependency(\.dataSource) var dataSource
     
-    var body: some Reducer<State, Action> {
+    var body: some Reducer<HotelsListState, HotelsListAction> {
         Reduce { state, action in
             switch action {
             case .start:
