@@ -10,7 +10,7 @@ import Foundation
 enum NetworkError: Error {
     case invalidUrl
     case invalidResponse
-    case decodingError(Error)
+    case decodingError(String)
     case invalidImageData
 }
 
@@ -33,7 +33,7 @@ final class NetworkManager {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(T.self, from: data)
         } catch {
-            throw NetworkError.decodingError(error)
+            throw NetworkError.decodingError(error.localizedDescription)
         }
     }
     
