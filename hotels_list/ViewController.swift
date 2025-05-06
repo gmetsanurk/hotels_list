@@ -8,25 +8,47 @@
 import UIKit
 import ComposableArchitecture
 
-protocol DataSource {
-    func fetchHotels() async throws -> [Hotel]
+// TODO: a separate file for DataSource
+protocol DataSource: Sendable {
+    func fetchHotelList() async throws -> [HotelSummary]
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail
+    func fetchImageData(fileName: String) async throws -> Data
 }
 
+protocol LocalDataSource: DataSource {
+    func save()
+}
+
+// TODO: you can use this for tests
 struct SomeAPIDataSource: DataSource {
-    func fetchHotels() async throws -> [Hotel] {
-        [.init(
-          hotelSummary: .init(
-            id: UUID(),
-            name: "–",
-            address: "–",
-            stars: nil,
-            distance: 0,
-            suitesAvailability: []
-          ),
-          image: nil,
-          latitude: 0,
-          longitude: 0
-        )]
+    func fetchHotelList() async throws -> [HotelSummary] {
+        [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: "")]
+    }
+    
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail {
+        .init(hotelSummary: .init(id: .init(), name: "", address: "", stars: nil, distance: 0, suitesAvailability: ""), image: nil, latitude: 0, longitude: 0)
+    }
+    
+    func fetchImageData(fileName: String) async throws -> Data {
+        .init()
+    }
+}
+
+struct SomeLocal: LocalDataSource {
+    func fetchHotelList() async throws -> [HotelSummary] {
+        [.init(id: .init(), name: "some name", address: "", stars: nil, distance: 0, suitesAvailability: "")]
+    }
+    
+    func fetchHotelDetail(id: Int) async throws -> HotelDetail {
+        .init(hotelSummary: .init(id: .init(), name: "", address: "", stars: nil, distance: 0, suitesAvailability: ""), image: nil, latitude: 0, longitude: 0)
+    }
+    
+    func fetchImageData(fileName: String) async throws -> Data {
+        .init()
+    }
+    
+    func save() {
+        
     }
 }
 
@@ -37,10 +59,22 @@ extension DependencyValues {
     }
 
     private enum DataSourceKey: DependencyKey {
-      static let liveValue: any DataSource = SomeAPIDataSource()
+      static let liveValue: any DataSource = NetworkManager()
     }
 }
 
+extension DependencyValues {
+    var localStorage: any LocalDataSource {
+        get { self[LocalDataSourceKey.self] }
+        set { self[LocalDataSourceKey.self] = newValue }
+    }
+
+    private enum LocalDataSourceKey: DependencyKey {
+      static let liveValue: any LocalDataSource = SomeLocal()
+    }
+}
+
+// TODO: a separate file for Coordinator
 struct Coordinator {
     func open(hotel: Hotel) {
         
@@ -49,20 +83,10 @@ struct Coordinator {
 
 let coordinator = Coordinator()
 
-let networkManager = NetworkManager.shared
-
-func loadImage(fileName: String) async throws -> UIImage {
-    let data = try await networkManager.fetchImageData(fileName: fileName)
-    guard let image = UIImage(data: data) else {
-        throw NetworkError.invalidImageData
-    }
-    return image
-}
-
 class ViewController: UIViewController {
-    private let store: StoreOf<HotelsReducer>
+    private let store: StoreOf<HotelsListReducer>
     
-    init(store: StoreOf<HotelsReducer>) {
+    init(store: StoreOf<HotelsListReducer>) {
         self.store = store
         super.init(nibName: nil, bundle: nil)
     }

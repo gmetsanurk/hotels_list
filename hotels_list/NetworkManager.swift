@@ -10,14 +10,11 @@ import Foundation
 enum NetworkError: Error {
     case invalidUrl
     case invalidResponse
-    case decodingError(Error)
+    case decodingError(String)
     case invalidImageData
 }
 
-final class NetworkManager {
-    static let shared = NetworkManager()
-    private init() {}
-    
+final class NetworkManager: DataSource {
     private let jsonBaseURL = "https://raw.githubusercontent.com/iMofas/ios-android-test/master"
     private let imageBaseURL = "https://github.com/iMofas/ios-android-test/raw/master"
     
@@ -33,7 +30,7 @@ final class NetworkManager {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(T.self, from: data)
         } catch {
-            throw NetworkError.decodingError(error)
+            throw NetworkError.decodingError(error.localizedDescription)
         }
     }
     
