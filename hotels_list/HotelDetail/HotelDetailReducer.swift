@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct HotelReducer {
+struct HotelDetailReducer {
     @ObservableState
     struct State: Identifiable, Equatable {
         var id = UUID()

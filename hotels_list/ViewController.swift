@@ -60,9 +60,9 @@ func loadImage(fileName: String) async throws -> UIImage {
 }
 
 class ViewController: UIViewController {
-    private let store: StoreOf<HotelsReducer>
+    private let store: StoreOf<HotelsListReducer>
     
-    init(store: StoreOf<HotelsReducer>) {
+    init(store: StoreOf<HotelsListReducer>) {
         self.store = store
         super.init(nibName: nil, bundle: nil)
     }

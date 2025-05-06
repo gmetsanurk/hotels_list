@@ -12,10 +12,10 @@ typealias Hotel = HotelDetail
 var imageName = "N"
 
 @Reducer
-struct HotelsReducer {
+struct HotelsListReducer {
     @ObservableState
     struct State {
-        var hotels: IdentifiedArrayOf<HotelReducer.State> = .init()
+        var hotels: IdentifiedArrayOf<HotelDetailReducer.State> = .init()
     }
     
     enum Action {
@@ -36,7 +36,7 @@ struct HotelsReducer {
                     await send(.hotelsLoaded(hotels))
                 }
             case .hotelsLoaded(let hotels):
-                state.hotels = IdentifiedArrayOf<HotelReducer.State>(uniqueElements: hotels.map {
+                state.hotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: hotels.map {
                     .init(hotel: $0)
                 })
                 return .none
