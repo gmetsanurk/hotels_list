@@ -33,11 +33,8 @@ struct HotelDetailReducer {
 
     }
     
-    enum Action {
-        case some
-    }
 
-    var body: some Reducer<State, Action> {
+    var body: some Reducer<State, HotelDetailAction> {
         EmptyReducer()
     }
     
