@@ -54,12 +54,8 @@ struct HotelDetailReducer {
             case .onAppear:
                 let hotelId = state.id
                 return .run { send in
-                    do {
-                        let detail = try await dataSource.fetchHotelDetail(id: hotelId)
-                        await send(.detailLoaded(detail))
-                    } catch {
-                        print("Detail could not be loaded")
-                    }
+                    let detail = try await dataSource.fetchHotelDetail(id: hotelId)
+                    await send(.detailLoaded(detail))
                 }
             case .detailLoaded(let hotel):
                 state.hotel = hotel

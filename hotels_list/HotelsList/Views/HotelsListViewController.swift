@@ -10,8 +10,6 @@ import ComposableArchitecture
 
 let collectionViewMagicNumber: CGFloat = 16
 
-//MARK: - ViewController
-
 class HotelsListViewController: UIViewController {
     var coordinator: Coordinator?
     

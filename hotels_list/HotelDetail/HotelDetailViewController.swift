@@ -82,8 +82,10 @@ class HotelDetailViewController: UIViewController {
         
         viewStore.publisher.image
             .receive(on: RunLoop.main)
-            .sink { [weak self] image in
-                self?.imageView.image = image
+            .sink { [weak self] imageOpt in
+                guard let self = self, let image = imageOpt else { return }
+                let cropped = image.removingBorder(pixels: 1)
+                self.imageView.image = cropped
             }
             .store(in: &cancellables)
         
@@ -167,5 +169,24 @@ private extension UILabel {
         lbl.font = .systemFont(ofSize: 14)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
+    }
+}
+
+private extension UIImage {
+    func removingBorder(pixels: CGFloat = 1.0) -> UIImage {
+        let scale = self.scale
+        let inset = pixels / scale
+        let width = size.width - inset * 2
+        let height = size.height - inset * 2
+        let cropRect = CGRect(
+            x: inset * scale,
+            y: inset * scale,
+            width: width * scale,
+            height: height * scale
+        )
+        guard
+            let cgImage = self.cgImage?.cropping(to: cropRect)
+        else { return self }
+        return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
 }
