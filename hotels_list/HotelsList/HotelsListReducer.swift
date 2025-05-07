@@ -31,7 +31,8 @@ struct HotelsListReducer {
                 }
             case .hotelsLoaded(let listOfHotels):
                 state.listOfHotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: listOfHotels.map {
-                    .init(id: $0.id, summary: $0)
+                    //.init(id: $0.id, summary: $0)
+                    .init(summary: $0)
                 })
                 return .none
             case .hotelSelected(let hotelSummary):

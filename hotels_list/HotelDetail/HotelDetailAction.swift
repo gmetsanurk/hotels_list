@@ -4,11 +4,13 @@
 //
 //  Created by Georgy on 2025-05-06.
 //
-import Foundation
+
+/*import UIKit
+import ComposableArchitecture
 
 enum HotelDetailAction {
-  case onAppear
-  case detailResponse(Result<HotelDetail, NetworkError>)
-  case imageResponse(Result<Data, NetworkError>)
-  case dismissAlert
+    case onAppear
+    case detailLoaded(Result<HotelDetail, NetworkError>)
+    case imageLoaded(Result<UIImage, NetworkError>)
 }
+*/

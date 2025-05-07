@@ -6,10 +6,19 @@
 //
 
 import UIKit
+import ComposableArchitecture
 
-struct HotelDetailState: Equatable {
+/*@ObservableState
+struct HotelDetailState: Equatable, Identifiable {
+    let id: Int
     var summary: HotelSummary
     var detail: HotelDetail?
     var image: UIImage?
-    var isLoading = false
-}
+    var isLoading: Bool = false
+    
+    init(summary: HotelSummary) {
+        self.id = summary.id
+        self.summary = summary
+      }
+}*/
+
