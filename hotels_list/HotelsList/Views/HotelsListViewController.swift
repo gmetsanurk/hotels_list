@@ -8,12 +8,13 @@
 import UIKit
 import ComposableArchitecture
 
-let coordinator = Coordinator()
 let collectionViewMagicNumber: CGFloat = 16
 
 //MARK: - ViewController
 
 class HotelsListViewController: UIViewController {
+    var coordinator: Coordinator?
+    
     private let store: StoreOf<HotelsListReducer>
     private let viewStore: ViewStore<HotelsListState, HotelsListAction>
     

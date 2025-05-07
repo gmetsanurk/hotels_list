@@ -42,7 +42,7 @@ struct HotelsListReducer {
                     await send(.imageReceived(image, hotel))
                 }
             case .imageReceived(let image, let hotel):
-                coordinator.open(hotel: hotel)
+                //coordinator.open(hotel: hotel)
                 return .none
             }
         }

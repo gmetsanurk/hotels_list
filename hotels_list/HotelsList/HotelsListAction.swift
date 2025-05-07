@@ -9,13 +9,6 @@ import ComposableArchitecture
 import UIKit
 
 enum HotelsListAction {
-    
-  /*case onAppear
-  case hotelsResponse(Result<[HotelSummary], NetworkError>)
-  case sortChanged(HotelSortType)
-  case hotelTapped(HotelSummary)
-  case dismissAlert*/
-    
     case start
     case hotelsLoaded([HotelSummary])
     case hotelSelected(Hotel)

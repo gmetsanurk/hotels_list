@@ -10,22 +10,20 @@ import UIKit
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    
+    private var coordinator: Coordinator?
+
     func application(
-        _: UIApplication,
-        didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        setupWindow()
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = window
+
+        let appCoordinator = AppCoordinator(window: window)
+        self.coordinator = appCoordinator
+        appCoordinator.start()
+
         return true
-    }
-    
-    private func setupWindow() {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let homeVC = HotelsListViewController(store: .init(initialState: .init(), reducer: {
-            HotelsListReducer()
-        }))
-        window?.rootViewController = homeVC
-        window?.makeKeyAndVisible()
     }
 }
 
