@@ -8,28 +8,6 @@
 import UIKit
 import ComposableArchitecture
 
-extension DependencyValues {
-    var dataSource: any DataSource {
-        get { self[DataSourceKey.self] }
-        set { self[DataSourceKey.self] = newValue }
-    }
-    
-    private enum DataSourceKey: DependencyKey {
-        static let liveValue: any DataSource = iMofasNetworkManager()
-    }
-}
-
-extension DependencyValues {
-    var localStorage: any LocalDataSource {
-        get { self[LocalDataSourceKey.self] }
-        set { self[LocalDataSourceKey.self] = newValue }
-    }
-    
-    private enum LocalDataSourceKey: DependencyKey {
-        static let liveValue: any LocalDataSource = SomeLocal()
-    }
-}
-
 let coordinator = Coordinator()
 let collectionViewMagicNumber: CGFloat = 16
 
