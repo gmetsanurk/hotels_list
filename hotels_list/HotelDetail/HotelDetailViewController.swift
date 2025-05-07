@@ -15,13 +15,7 @@ class HotelDetailViewController: UIViewController {
     private let viewStore: ViewStore<HotelDetailReducer.State, HotelDetailReducer.Action>
     private var cancellables: Set<AnyCancellable> = []
     
-    private let imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
+    private var imageView = UIImageView()
     private let nameLabel = UILabel.makeHeadline()
     private let addressLabel = UILabel.makeSubheadline()
     private let starsLabel = UILabel.makeBody()
@@ -40,14 +34,14 @@ class HotelDetailViewController: UIViewController {
         self.viewStore = ViewStore(store, observe: { $0 })
         super.init(nibName: nil, bundle: nil)
     }
-    required init?(coder: NSCoder) { nil }
     
+    required init?(coder: NSCoder) { nil }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Colors.backgroundColor
         title = viewStore.summary.name ?? "Hotel Details"
-        
+        createImageView()
         setupSubviews()
         bindViewStore()
         
@@ -116,37 +110,86 @@ class HotelDetailViewController: UIViewController {
         ].forEach { view.addSubview($0) }
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            // Image
+            imageView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: AppGeometry.HotelDetailScreen.topImagePadding
+            ),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 200),
+            imageView.heightAnchor.constraint(
+                equalToConstant: AppGeometry.HotelDetailScreen.imageHeight
+            ),
             
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            // Name
+            nameLabel.topAnchor.constraint(
+                equalTo: imageView.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.verticalSpacing
+            ),
+            nameLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: AppGeometry.HotelDetailScreen.horizontalPadding
+            ),
+            nameLabel.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -AppGeometry.HotelDetailScreen.horizontalPadding
+            ),
             
-            addressLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            // Address
+            addressLabel.topAnchor.constraint(
+                equalTo: nameLabel.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.verticalSpacing
+            ),
             addressLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             addressLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
             
-            starsLabel.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 8),
+            // Stars
+            starsLabel.topAnchor.constraint(
+                equalTo: addressLabel.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.verticalSpacing
+            ),
             starsLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            distanceLabel.topAnchor.constraint(equalTo: starsLabel.bottomAnchor, constant: 8),
+            // Distance
+            distanceLabel.topAnchor.constraint(
+                equalTo: starsLabel.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.verticalSpacing
+            ),
             distanceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            suitesLabel.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 8),
+            // Suites
+            suitesLabel.topAnchor.constraint(
+                equalTo: distanceLabel.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.verticalSpacing
+            ),
             suitesLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            latitudeLabel.topAnchor.constraint(equalTo: suitesLabel.bottomAnchor, constant: 8),
+            // Latitude
+            latitudeLabel.topAnchor.constraint(
+                equalTo: suitesLabel.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.coordinateTopSpacing
+            ),
             latitudeLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            longitudeLabel.topAnchor.constraint(equalTo: latitudeLabel.bottomAnchor, constant: 4),
+            // Longitude
+            longitudeLabel.topAnchor.constraint(
+                equalTo: latitudeLabel.bottomAnchor,
+                constant: AppGeometry.HotelDetailScreen.coordinateTopSpacing
+            ),
             longitudeLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
+            // Activity indicator
             activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
         ])
+    }
+    
+    private func createImageView() {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        imageView = iv
     }
 }
 

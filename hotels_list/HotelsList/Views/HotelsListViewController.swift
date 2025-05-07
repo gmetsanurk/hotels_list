@@ -9,8 +9,6 @@ import UIKit
 import ComposableArchitecture
 import Combine
 
-let collectionViewMagicNumber: CGFloat = 16
-
 class HotelsListViewController: UIViewController {
     private let store: StoreOf<HotelsListReducer>
     private let viewStore: ViewStore<HotelsListState, HotelsListAction>
@@ -51,7 +49,7 @@ class HotelsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.backgroundColor
         createSegmentedControl()
         navigationItem.titleView = sortControl
         
@@ -114,23 +112,35 @@ class HotelsListViewController: UIViewController {
         sortControl = sc
     }
     
-    func setupSubviews() {
+    private func setupSubviews() {
         view.addSubview(hotelsListCollectionView)
         hotelsListCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hotelsListCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: collectionViewMagicNumber),
-            hotelsListCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: collectionViewMagicNumber),
-            hotelsListCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -collectionViewMagicNumber),
-            hotelsListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -collectionViewMagicNumber)
+          hotelsListCollectionView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: AppGeometry.HotelsListScreen.verticalPadding
+          ),
+          hotelsListCollectionView.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor,
+            constant: AppGeometry.HotelsListScreen.horizontalPadding
+          ),
+          hotelsListCollectionView.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor,
+            constant: -AppGeometry.HotelsListScreen.horizontalPadding
+          ),
+          hotelsListCollectionView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor,
+            constant: -AppGeometry.HotelsListScreen.verticalPadding
+          ),
         ])
-        
+
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+          activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
-    }
+      }
 }
  
 

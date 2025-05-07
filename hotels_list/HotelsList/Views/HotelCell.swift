@@ -7,9 +7,6 @@
 
 import UIKit
 
-let magicNumber: CGFloat = 10
-let magicFontSize: CGFloat = 14
-
 class HotelCell: UICollectionViewCell {
     static let reuseID = "HotelCell"
     private let nameLabel = UILabel()
@@ -28,8 +25,8 @@ class HotelCell: UICollectionViewCell {
     private func setupUI() {
         nameLabel.font = .boldSystemFont(ofSize: 16)
         nameLabel.numberOfLines = 2
-        distanceLabel.font = .systemFont(ofSize: magicFontSize)
-        availabilityLabel.font = .systemFont(ofSize: magicFontSize)
+        distanceLabel.font = .systemFont(ofSize: AppGeometry.HotelsListScreen.cellFontSize)
+        availabilityLabel.font = .systemFont(ofSize: AppGeometry.HotelsListScreen.cellFontSize)
         
         let stack = UIStackView(arrangedSubviews: [nameLabel, distanceLabel, availabilityLabel])
         stack.axis = .vertical
@@ -37,14 +34,14 @@ class HotelCell: UICollectionViewCell {
         contentView.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: magicNumber),
-            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: magicNumber),
-            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -magicNumber),
-            stack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -magicNumber)
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: AppGeometry.HotelsListScreen.cellSize),
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: AppGeometry.HotelsListScreen.cellSize),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -AppGeometry.HotelsListScreen.cellSize),
+            stack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -AppGeometry.HotelsListScreen.cellSize)
         ])
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.systemGray4.cgColor
-        contentView.layer.cornerRadius = magicNumber
+        contentView.layer.cornerRadius = AppGeometry.HotelsListScreen.cellSize
     }
     
     func configure(with summary: HotelSummary) {
