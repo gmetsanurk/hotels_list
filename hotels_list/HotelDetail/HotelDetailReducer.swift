@@ -68,7 +68,7 @@ struct HotelDetailReducer {
                 }
                 return .run { send in
                     do {
-                        let uiImage = try await loadImage(fileName: fileName)
+                        let uiImage = try await loadImage(fileName)
                         await send(.imageLoaded(uiImage))
                     } catch {
                         print("Image could not be loaded")
@@ -83,8 +83,8 @@ struct HotelDetailReducer {
         }
     }
     
-    private func loadImage(fileName: String) async throws -> UIImage {
-        let data = try await dataSource.fetchImageData(fileName: "\(fileName).jpg")
+    private func loadImage(_ fileName: String) async throws -> UIImage {
+        let data = try await dataSource.fetchImageData(fileName: fileName)
         guard let image = UIImage(data: data) else {
             throw NetworkError.invalidImageData
         }
