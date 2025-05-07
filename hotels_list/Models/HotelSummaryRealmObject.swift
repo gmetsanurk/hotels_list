@@ -6,7 +6,7 @@
 //
 import RealmSwift
 
-class HotelSummaryObject: Object {
+class HotelSummaryRealmObject: Object {
     @Persisted(primaryKey: true) var id: Int
     @Persisted var name: String?
     @Persisted var address: String?
@@ -22,5 +22,18 @@ class HotelSummaryObject: Object {
         self.stars = summary.stars ?? 0.0
         self.distance = summary.distance ?? 0.0
         self.suitesAvailability = summary.suitesAvailability
+    }
+}
+
+extension HotelSummaryRealmObject {
+    func toModel() -> HotelSummary {
+        HotelSummary(
+            id: id,
+            name: name,
+            address: address,
+            stars: stars,
+            distance: distance,
+            suitesAvailability: suitesAvailability
+        )
     }
 }
