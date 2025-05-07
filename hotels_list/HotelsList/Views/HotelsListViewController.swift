@@ -7,14 +7,25 @@
 
 import UIKit
 import ComposableArchitecture
+import Combine
 
 let collectionViewMagicNumber: CGFloat = 16
 
 class HotelsListViewController: UIViewController {
-    var coordinator: Coordinator?
-    
     private let store: StoreOf<HotelsListReducer>
     private let viewStore: ViewStore<HotelsListState, HotelsListAction>
+    var coordinator: Coordinator?
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    private enum SortType: Int {
+        case server = 0, distance, availability
+    }
+    private lazy var sortControl = UISegmentedControl()
+    
+    private var currentSort: SortType = .server {
+        didSet { hotelsListCollectionView.reloadData() }
+    }
     
     private lazy var hotelsListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -22,7 +33,7 @@ class HotelsListViewController: UIViewController {
         layout.minimumLineSpacing = 12
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.dataSource = self
-        cv.delegate = self
+        cv.delegate   = self
         cv.register(HotelCell.self, forCellWithReuseIdentifier: HotelCell.reuseID)
         cv.backgroundColor = .systemBackground
         return cv
@@ -31,8 +42,8 @@ class HotelsListViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
     init(store: StoreOf<HotelsListReducer>) {
-        self.store = store
-        self.viewStore = ViewStore(store, observe: {$0})
+        self.store     = store
+        self.viewStore = ViewStore(store, observe: { $0 })
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,23 +52,69 @@ class HotelsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Hotels"
+        createSegmentedControl()
+        navigationItem.titleView = sortControl
+        
         setupSubviews()
         observeDataSource()
         
-        store.send(.start)
+        viewStore.send(.start)
     }
-}
-
-extension HotelsListViewController {
-    func observeDataSource() {
-        observe { [weak self] in
-            self?.hotelsListCollectionView.reloadData()
-            print(self?.store.state.listOfHotels)
+    
+    @objc private func sortChanged(_ sc: UISegmentedControl) {
+        guard let newSort = SortType(rawValue: sc.selectedSegmentIndex) else { return }
+        currentSort = newSort
+    }
+    
+    var displayedHotels: [HotelDetailReducer.State] {
+        let originals = viewStore.state.listOfHotels.map { $0 }
+        switch currentSort {
+        case .server:
+            return originals
+        case .distance:
+            return originals.sorted {
+                ($0.summary.distance ?? 0) < ($1.summary.distance ?? 0)
+            }
+        case .availability:
+            return originals.sorted {
+                let l = Int($0.summary.suitesAvailability ?? "") ?? 0
+                let r = Int($1.summary.suitesAvailability ?? "") ?? 0
+                return l > r
+            }
         }
     }
     
-    private func setupSubviews() {
+    func observeDataSource() {
+        viewStore.publisher.isLoading
+            .receive(on: RunLoop.main)
+            .sink { [weak self] isLoading in
+                guard let self = self else { return }
+                self.activityIndicator.center = self.view.center
+                if isLoading {
+                    self.activityIndicator.startAnimating()
+                } else {
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewStore.publisher.listOfHotels
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.hotelsListCollectionView.reloadData()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func createSegmentedControl() {
+        let sc = UISegmentedControl(items: ["Server", "Distance", "Suites"])
+        sc.selectedSegmentIndex = SortType.server.rawValue
+        sc.addTarget(self, action: #selector(sortChanged(_:)), for: .valueChanged)
+        sc.translatesAutoresizingMaskIntoConstraints = false
+        sortControl = sc
+    }
+    
+    func setupSubviews() {
         view.addSubview(hotelsListCollectionView)
         hotelsListCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -75,24 +132,8 @@ extension HotelsListViewController {
         ])
     }
 }
+ 
 
-extension HotelsListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        store.state.listOfHotels.count
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HotelCell.reuseID, for: indexPath) as! HotelCell
-        let viewStoreHotel = viewStore.listOfHotels[indexPath.item].hotel
-        let summary = viewStoreHotel.hotelSummary
-        cell.configure(with: summary)
-        return cell
-    }
-}
 
-extension HotelsListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let summary = viewStore.listOfHotels[indexPath.item].summary
-        coordinator?.openHotelDetail(summary)
-    }
-}
+

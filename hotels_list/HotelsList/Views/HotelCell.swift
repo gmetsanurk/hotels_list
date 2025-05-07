@@ -7,7 +7,7 @@
 
 import UIKit
 
-let magicNumber: CGFloat = 8
+let magicNumber: CGFloat = 10
 let magicFontSize: CGFloat = 14
 
 class HotelCell: UICollectionViewCell {
