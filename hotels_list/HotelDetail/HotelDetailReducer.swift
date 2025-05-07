@@ -63,15 +63,24 @@ struct HotelDetailReducer {
                 }
             case .detailLoaded(let hotel):
                 state.hotel = hotel
-                guard let fileName = hotel.image else {
+                
+                let placeholderImage = UIImage(named: "placeholder")
+                ?? UIImage(systemName: "photo")
+                ?? UIImage()
+                
+                guard let fileName = hotel.image, !fileName.isEmpty else {
+                    state.image = placeholderImage
+                    state.isLoading = false
                     return .none
                 }
+                
+                state.isLoading = true
                 return .run { send in
                     do {
                         let uiImage = try await loadImage(fileName)
                         await send(.imageLoaded(uiImage))
                     } catch {
-                        print("Image could not be loaded")
+                        await send(.imageLoaded(placeholderImage))
                     }
                 }
                 
