@@ -50,6 +50,8 @@ class HotelsListViewController: UIViewController {
         return cv
     }()
     
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     init(store: StoreOf<HotelsListReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: {$0})
