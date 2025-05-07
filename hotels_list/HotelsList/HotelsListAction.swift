@@ -11,6 +11,6 @@ import UIKit
 enum HotelsListAction {
     case start
     case hotelsLoaded([HotelSummary])
-    case hotelSelected(Hotel)
-    case imageReceived(UIImage, HotelDetail)
+    case hotelSelected(HotelSummary)
+    //case imageReceived(UIImage, HotelDetail)
 }

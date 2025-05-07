@@ -94,6 +94,6 @@ extension HotelsListViewController: UICollectionViewDataSource {
 
 extension HotelsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        store.send(.hotelSelected(store.state.listOfHotels[indexPath.item].hotel))
+        store.send(.hotelSelected(store.state.listOfHotels[indexPath.item].hotel.hotelSummary))
     }
 }

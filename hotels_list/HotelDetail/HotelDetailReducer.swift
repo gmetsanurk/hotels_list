@@ -5,13 +5,17 @@
 //  Created by Georgy on 2025-04-30.
 //
 
-import Foundation
+import UIKit
 import ComposableArchitecture
 
 typealias Hotel = HotelDetail
 
 @Reducer
 struct HotelDetailReducer {
+    @Dependency(\.dataSource) var dataSource
+    @Dependency(\.mainRunLoop) var mainRunLoop
+        
+    
     @ObservableState
     struct State: Identifiable, Equatable {
         var id: Int
@@ -35,5 +39,13 @@ struct HotelDetailReducer {
 
     var body: some Reducer<State, Action> {
         EmptyReducer()
+    }
+    
+    private func loadImage(fileName: String) async throws -> UIImage {
+        let data = try await dataSource.fetchImageData(fileName: fileName)
+        guard let image = UIImage(data: data) else {
+            throw NetworkError.invalidImageData
+        }
+        return image
     }
 }
