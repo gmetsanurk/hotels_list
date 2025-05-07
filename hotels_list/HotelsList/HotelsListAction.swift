@@ -4,6 +4,7 @@
 //
 //  Created by Georgy on 2025-05-06.
 //
+
 import Foundation
 import ComposableArchitecture
 import UIKit
@@ -11,7 +12,5 @@ import UIKit
 enum HotelsListAction {
     case start
     case hotelsLoaded([HotelSummary])
-    case hotelSelected(Hotel)
-    //case imageReceived(UIImage, HotelSummary)
-    case navigateToDetail(HotelSummary)
+    case hotelSelected(HotelSummary)
 }

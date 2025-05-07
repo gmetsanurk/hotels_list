@@ -5,11 +5,7 @@
 //  Created by Georgy on 2025-04-30.
 //
 
-import UIKit
 import ComposableArchitecture
-
-typealias Hotel = HotelDetail
-let imageName = "N"
 
 @Reducer
 struct HotelsListReducer {
@@ -33,34 +29,17 @@ struct HotelsListReducer {
                         try await localStorage.saveHotels(freshHotels)
                     }
                 }
-            case .hotelsLoaded(let hotels):
-                state.hotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: hotels.map {
-                    .init(id: $0.id ?? .init(), summary: $0)
+            case .hotelsLoaded(let listOfHotels):
+                state.listOfHotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: listOfHotels.map {
+                    .init(summary: $0)
                 })
                 return .none
-            case .hotelSelected(let hotel):
-                return .run { send in
-                    let image = try await loadImage(fileName: imageName)
-                    //await send(.imageReceived(image, hotel))
+            case .hotelSelected(let hotelSummary):
+                Task { @MainActor in
+                    coordinator?.openHotelDetail(hotelSummary)
                 }
-            /*case .imageReceived(let image, let hotel):
-                coordinator?.openHotelDetail(hotel)
-                return .none*/
-            case .navigateToDetail(let hotel):
-                return .run { send in
-                    Task { @MainActor in
-                        coordinator?.openHotelDetail(hotel)
-                    }
-                }
+                return .none
             }
         }
-    }
-    
-    private func loadImage(fileName: String) async throws -> UIImage {
-        let data = try await dataSource.fetchImageData(fileName: fileName)
-        guard let image = UIImage(data: data) else {
-            throw NetworkError.invalidImageData
-        }
-        return image
     }
 }

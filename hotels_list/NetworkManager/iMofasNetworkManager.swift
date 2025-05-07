@@ -45,14 +45,16 @@ final class iMofasNetworkManager: DataSource {
         guard let url = URL(string: "\(jsonBaseURL)/\(id).json") else {
             throw NetworkError.invalidUrl
         }
-        return try await fetchJSON(from: url)
+        return try await fetchJSON(from: url) as HotelDetail
     }
     
     func fetchImageData(fileName: String) async throws -> Data {
-        var components = URLComponents(string: imageBaseURL)
-        components?.path = "/\(fileName)"
+        guard var components = URLComponents(string: imageBaseURL) else {
+            throw NetworkError.invalidUrl
+        }
+        components.path += "/\(fileName)"
         
-        guard let url = components?.url else {
+        guard let url = components.url else {
             throw NetworkError.invalidUrl
         }
         
