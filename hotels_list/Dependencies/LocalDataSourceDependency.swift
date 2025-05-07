@@ -13,6 +13,6 @@ extension DependencyValues {
     }
     
     private enum LocalDataSourceKey: DependencyKey {
-        static let liveValue: any LocalDataSource = SomeLocal()
+        static let liveValue: LocalDataSource = try! RealmLocalDataSource()
     }
 }

@@ -19,6 +19,9 @@
 		660483622DCA4AB300FC6A38 /* HotelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660483612DCA4AA600FC6A38 /* HotelCell.swift */; };
 		660483662DCB5DD700FC6A38 /* DataSourceDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660483652DCB5DB600FC6A38 /* DataSourceDependency.swift */; };
 		660483682DCB5DEF00FC6A38 /* LocalDataSourceDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660483672DCB5DEA00FC6A38 /* LocalDataSourceDependency.swift */; };
+		6604836D2DCB602900FC6A38 /* HotelSummaryRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6604836C2DCB601D00FC6A38 /* HotelSummaryRealmObject.swift */; };
+		660483722DCB62C600FC6A38 /* RealmLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660483712DCB62BF00FC6A38 /* RealmLocalDataSource.swift */; };
+		660483752DCB684700FC6A38 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 660483742DCB684700FC6A38 /* RealmSwift */; };
 		665382762DC0C19C00B5381D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 665382722DC0C19C00B5381D /* Assets.xcassets */; };
 		665382782DC0C19C00B5381D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665382712DC0C19C00B5381D /* AppDelegate.swift */; };
 		6653827C2DC0D66A00B5381D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 6653827B2DC0D66A00B5381D /* ComposableArchitecture */; };
@@ -42,6 +45,8 @@
 		660483612DCA4AA600FC6A38 /* HotelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCell.swift; sourceTree = "<group>"; };
 		660483652DCB5DB600FC6A38 /* DataSourceDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceDependency.swift; sourceTree = "<group>"; };
 		660483672DCB5DEA00FC6A38 /* LocalDataSourceDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataSourceDependency.swift; sourceTree = "<group>"; };
+		6604836C2DCB601D00FC6A38 /* HotelSummaryRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelSummaryRealmObject.swift; sourceTree = "<group>"; };
+		660483712DCB62BF00FC6A38 /* RealmLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmLocalDataSource.swift; sourceTree = "<group>"; };
 		665382492DC0B55B00B5381D /* hotels_list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hotels_list.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		665382712DC0C19C00B5381D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		665382722DC0C19C00B5381D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				660483752DCB684700FC6A38 /* RealmSwift in Frameworks */,
 				6653827C2DC0D66A00B5381D /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +111,16 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
+		660483692DCB5FDB00FC6A38 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				6604835E2DCA466500FC6A38 /* DataSource.swift */,
+				6604835C2DCA460A00FC6A38 /* SomeAPIDataSource.swift */,
+				660483712DCB62BF00FC6A38 /* RealmLocalDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		665382402DC0B55B00B5381D = {
 			isa = PBXGroup;
 			children = (
@@ -126,9 +142,8 @@
 			children = (
 				665382712DC0C19C00B5381D /* AppDelegate.swift */,
 				6604835A2DCA459A00FC6A38 /* Coordinator.swift */,
-				6604835E2DCA466500FC6A38 /* DataSource.swift */,
-				6604835C2DCA460A00FC6A38 /* SomeAPIDataSource.swift */,
 				6653828B2DC28CAB00B5381D /* iMofasNetworkManager.swift */,
+				660483692DCB5FDB00FC6A38 /* DataSource */,
 				660483642DCB5D8400FC6A38 /* Dependencies */,
 				660483502DCA008900FC6A38 /* HotelsList */,
 				660483512DCA009100FC6A38 /* HotelDetail */,
@@ -144,6 +159,7 @@
 			children = (
 				665382892DC213FE00B5381D /* HotelSummary.swift */,
 				665382822DC2126E00B5381D /* HotelDetail.swift */,
+				6604836C2DCB601D00FC6A38 /* HotelSummaryRealmObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -166,6 +182,7 @@
 			name = hotels_list;
 			packageProductDependencies = (
 				6653827B2DC0D66A00B5381D /* ComposableArchitecture */,
+				660483742DCB684700FC6A38 /* RealmSwift */,
 			);
 			productName = hotels_list;
 			productReference = 665382492DC0B55B00B5381D /* hotels_list.app */;
@@ -197,6 +214,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6653827A2DC0D66A00B5381D /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				660483732DCB684700FC6A38 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6653824A2DC0B55B00B5381D /* Products */;
@@ -240,8 +258,10 @@
 				660483622DCA4AB300FC6A38 /* HotelCell.swift in Sources */,
 				6604834A2DC9FBE800FC6A38 /* HotelSortType.swift in Sources */,
 				6653828A2DC2140100B5381D /* HotelSummary.swift in Sources */,
+				660483722DCB62C600FC6A38 /* RealmLocalDataSource.swift in Sources */,
 				660483552DCA060E00FC6A38 /* HotelsListAction.swift in Sources */,
 				660483592DCA06E700FC6A38 /* HotelDetailViewController.swift in Sources */,
+				6604836D2DCB602900FC6A38 /* HotelSummaryRealmObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +467,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		660483732DCB684700FC6A38 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 20.0.2;
+			};
+		};
 		6653827A2DC0D66A00B5381D /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -458,6 +486,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		660483742DCB684700FC6A38 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 660483732DCB684700FC6A38 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		6653827B2DC0D66A00B5381D /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6653827A2DC0D66A00B5381D /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

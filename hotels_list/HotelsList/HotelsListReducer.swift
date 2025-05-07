@@ -21,8 +21,15 @@ struct HotelsListReducer {
             switch action {
             case .start:
                 return .run { send in
-                    let hotels = try await dataSource.fetchHotelsList()
-                    await send(.hotelsLoaded(hotels))
+                    if let cached = try? await localStorage.fetchCachedHotels() {
+                        await send(.hotelsLoaded(cached))
+                    }
+                    
+                    do {
+                        let freshHotels = try await dataSource.fetchHotelsList()
+                        await send(.hotelsLoaded(freshHotels))
+                        try await localStorage.saveHotels(freshHotels)
+                    }
                 }
             case .hotelsLoaded(let hotels):
                 state.hotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: hotels.map {
