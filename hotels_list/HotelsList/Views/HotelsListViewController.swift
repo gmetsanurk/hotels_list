@@ -39,7 +39,7 @@ class HotelsListViewController: UIViewController {
     private let store: StoreOf<HotelsListReducer>
     private let viewStore: ViewStore<HotelsListState, HotelsListAction>
     
-    private lazy var hotelListCollectionView: UICollectionView = {
+    private lazy var hotelsListCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: view.bounds.width - 32, height: 80)
         layout.minimumLineSpacing = 12
@@ -75,19 +75,19 @@ class HotelsListViewController: UIViewController {
 extension HotelsListViewController {
     func observeDataSource() {
         observe { [weak self] in
-            // self?.tableView.reloadData()
+            self?.hotelsListCollectionView.reloadData()
             print(self?.store.state.hotels)
         }
     }
     
     private func setupSubviews() {
-        view.addSubview(hotelListCollectionView)
-        hotelListCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hotelsListCollectionView)
+        hotelsListCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hotelListCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: collectionViewMagicNumber),
-            hotelListCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: collectionViewMagicNumber),
-            hotelListCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -collectionViewMagicNumber),
-            hotelListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -collectionViewMagicNumber)
+            hotelsListCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: collectionViewMagicNumber),
+            hotelsListCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: collectionViewMagicNumber),
+            hotelsListCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -collectionViewMagicNumber),
+            hotelsListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -collectionViewMagicNumber)
         ])
         
         view.addSubview(activityIndicator)
