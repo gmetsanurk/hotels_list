@@ -24,6 +24,7 @@ class HotelDetailViewController: UIViewController {
     private let suitesLabel = UILabel.makeBody()
     private let latitudeLabel = UILabel.makeBody()
     private let longitudeLabel = UILabel.makeBody()
+    
     private let activityIndicator: UIActivityIndicatorView = {
         let ai = UIActivityIndicatorView(style: .large)
         ai.translatesAutoresizingMaskIntoConstraints = false
