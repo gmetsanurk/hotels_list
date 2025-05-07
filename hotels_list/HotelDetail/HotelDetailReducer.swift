@@ -8,6 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
+typealias Hotel = HotelDetail
+
 @Reducer
 struct HotelDetailReducer {
     @ObservableState

@@ -8,9 +8,6 @@
 import UIKit
 import ComposableArchitecture
 
-typealias Hotel = HotelDetail
-let imageName = "N"
-
 @Reducer
 struct HotelsListReducer {
     @Dependency(\.dataSource) var dataSource
@@ -33,23 +30,20 @@ struct HotelsListReducer {
                         try await localStorage.saveHotels(freshHotels)
                     }
                 }
-            case .hotelsLoaded(let hotels):
-                state.hotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: hotels.map {
-                    .init(id: $0.id ?? .init(), summary: $0)
+            case .hotelsLoaded(let listOfHotels):
+                state.listOfHotels = IdentifiedArrayOf<HotelDetailReducer.State>(uniqueElements: listOfHotels.map {
+                    .init(id: $0.id, summary: $0)
                 })
                 return .none
             case .hotelSelected(let hotel):
                 return .run { send in
-                    let image = try await loadImage(fileName: imageName)
-                    //await send(.imageReceived(image, hotel))
+                    let image = try await loadImage(fileName: hotel.image ?? "")
+                    await send(.imageReceived(image, hotel))
                 }
-            /*case .imageReceived(let image, let hotel):
-                coordinator?.openHotelDetail(hotel)
-                return .none*/
-            case .navigateToDetail(let hotel):
+            case .imageReceived(let image, let hotel):
                 return .run { send in
                     Task { @MainActor in
-                        coordinator?.openHotelDetail(hotel)
+                        coordinator?.openHotelDetail(hotel.hotelSummary)
                     }
                 }
             }

@@ -9,7 +9,7 @@ import ComposableArchitecture
 
 @ObservableState
 struct HotelsListState: Equatable {
-  var hotels: IdentifiedArrayOf<HotelDetailReducer.State> = .init()
+  var listOfHotels: IdentifiedArrayOf<HotelDetailReducer.State> = .init()
   var isLoading: Bool = false
   var sortType: HotelSortType = .server
   var alertMessage: String?

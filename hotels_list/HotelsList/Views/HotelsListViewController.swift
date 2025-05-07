@@ -55,7 +55,7 @@ extension HotelsListViewController {
     func observeDataSource() {
         observe { [weak self] in
             self?.hotelsListCollectionView.reloadData()
-            print(self?.store.state.hotels)
+            print(self?.store.state.listOfHotels)
         }
     }
     
@@ -80,12 +80,12 @@ extension HotelsListViewController {
 
 extension HotelsListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        store.state.hotels.count
+        store.state.listOfHotels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HotelCell.reuseID, for: indexPath) as! HotelCell
-        let viewStoreHotel = viewStore.hotels[indexPath.item].hotel
+        let viewStoreHotel = viewStore.listOfHotels[indexPath.item].hotel
         let summary = viewStoreHotel.hotelSummary
         cell.configure(with: summary)
         return cell
@@ -94,6 +94,6 @@ extension HotelsListViewController: UICollectionViewDataSource {
 
 extension HotelsListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        store.send(.hotelSelected(store.state.hotels[indexPath.item].hotel))
+        store.send(.hotelSelected(store.state.listOfHotels[indexPath.item].hotel))
     }
 }
