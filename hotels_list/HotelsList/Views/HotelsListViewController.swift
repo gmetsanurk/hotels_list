@@ -63,9 +63,11 @@ class HotelsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        title = "Hotels"
+        setupSubviews()
         observeDataSource()
         
-        view.backgroundColor = .white
         store.send(.start)
     }
 }
@@ -87,7 +89,7 @@ extension HotelsListViewController {
             hotelListCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -collectionViewMagicNumber),
             hotelListCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -collectionViewMagicNumber)
         ])
-
+        
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -103,7 +105,11 @@ extension HotelsListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        UICollectionViewCell()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HotelCell.reuseID, for: indexPath) as! HotelCell
+        let viewStoreHotel = viewStore.hotels[indexPath.item].hotel
+        let summary = viewStoreHotel.hotelSummary
+        cell.configure(with: summary)
+        return cell
     }
 }
 
