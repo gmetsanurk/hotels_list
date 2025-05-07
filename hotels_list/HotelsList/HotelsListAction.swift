@@ -12,5 +12,6 @@ enum HotelsListAction {
     case start
     case hotelsLoaded([HotelSummary])
     case hotelSelected(Hotel)
-    case imageReceived(UIImage, Hotel)
+    //case imageReceived(UIImage, HotelSummary)
+    case navigateToDetail(HotelSummary)
 }

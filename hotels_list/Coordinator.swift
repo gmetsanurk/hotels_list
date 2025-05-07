@@ -43,7 +43,7 @@ final class AppCoordinator: Coordinator {
             initialState: .init(summary: summary),
             reducer: { HotelDetailReducer() }
         )
-        let detailVC = HotelDetailViewController()//store: detailStore)
+        let detailVC = HotelDetailViewController(store: detailStore)
         detailVC.coordinator = self
         navigationController.pushViewController(detailVC, animated: true)
     }
