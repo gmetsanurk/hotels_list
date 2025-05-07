@@ -38,6 +38,18 @@ class HotelsListViewController: UIViewController {
     private let store: StoreOf<HotelsListReducer>
     private let viewStore: ViewStore<HotelsListState, HotelsListAction>
     
+    private lazy var hotelListCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: view.bounds.width - 32, height: 80)
+        layout.minimumLineSpacing = 12
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.dataSource = self
+        cv.delegate = self
+        cv.register(HotelCell.self, forCellWithReuseIdentifier: HotelCell.reuseID)
+        cv.backgroundColor = .systemBackground
+        return cv
+    }()
+    
     init(store: StoreOf<HotelsListReducer>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: {$0})
@@ -53,10 +65,13 @@ class HotelsListViewController: UIViewController {
             // self?.tableView.reloadData()
             print(self?.store.state.hotels)
         }
-        
         view.backgroundColor = .white
         store.send(.start)
     }
+}
+
+extension HotelsListViewController {
+
 }
 
 extension HotelsListViewController: UICollectionViewDataSource {
