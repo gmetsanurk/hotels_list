@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HotelSummary: Codable, Equatable, Sendable {
+struct HotelSummary: Identifiable, Codable, Equatable, Sendable {
     let id: Int
     let name: String?
     let address: String?

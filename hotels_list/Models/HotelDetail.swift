@@ -9,6 +9,6 @@ import Foundation
 struct HotelDetail: Codable, Equatable, Sendable {
     let hotelSummary: HotelSummary
     let image: String?
-    let latitude: Decimal
-    let longitude: Decimal
+    let latitude: Double
+    let longitude: Double
 }

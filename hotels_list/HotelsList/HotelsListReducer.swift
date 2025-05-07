@@ -16,6 +16,8 @@ struct HotelsListReducer {
     @Dependency(\.dataSource) var dataSource
     @Dependency(\.localStorage) var localStorage
     
+    var coordinator: Coordinator?
+    
     var body: some Reducer<HotelsListState, HotelsListAction> {
         Reduce { state, action in
             switch action {
@@ -39,11 +41,17 @@ struct HotelsListReducer {
             case .hotelSelected(let hotel):
                 return .run { send in
                     let image = try await loadImage(fileName: imageName)
-                    await send(.imageReceived(image, hotel))
+                    //await send(.imageReceived(image, hotel))
                 }
-            case .imageReceived(let image, let hotel):
-                coordinator.open(hotel: hotel)
-                return .none
+            /*case .imageReceived(let image, let hotel):
+                coordinator?.openHotelDetail(hotel)
+                return .none*/
+            case .navigateToDetail(let hotel):
+                return .run { send in
+                    Task { @MainActor in
+                        coordinator?.openHotelDetail(hotel)
+                    }
+                }
             }
         }
     }
