@@ -66,8 +66,8 @@
 			children = (
 				6653827F2DC2062400B5381D /* HotelsListReducer.swift */,
 				6604834D2DC9FC6400FC6A38 /* HotelsListState.swift */,
-				660483492DC9FBD500FC6A38 /* HotelSortType.swift */,
 				660483542DCA060600FC6A38 /* HotelsListAction.swift */,
+				660483492DC9FBD500FC6A38 /* HotelSortType.swift */,
 				660483602DCA4A9B00FC6A38 /* Views */,
 			);
 			path = HotelsList;

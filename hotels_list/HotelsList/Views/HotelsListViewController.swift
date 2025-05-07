@@ -32,17 +32,19 @@ extension DependencyValues {
 
 let coordinator = Coordinator()
 
+//MARK: - ViewController
+
 class HotelsListViewController: UIViewController {
     private let store: StoreOf<HotelsListReducer>
+    private let viewStore: ViewStore<HotelsListState, HotelsListAction>
     
     init(store: StoreOf<HotelsListReducer>) {
         self.store = store
+        self.viewStore = ViewStore(store, observe: {$0})
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        nil
-    }
+    required init?(coder: NSCoder) { nil }
     
     override func viewDidLoad() {
         super.viewDidLoad()
