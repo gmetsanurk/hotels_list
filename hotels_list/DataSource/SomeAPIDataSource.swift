@@ -4,6 +4,7 @@
 //
 //  Created by Georgy on 2025-05-06.
 //
+
 import Foundation
 // TODO: you can use this for tests
 struct SomeAPIDataSource: DataSource {

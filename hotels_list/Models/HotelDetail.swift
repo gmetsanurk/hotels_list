@@ -4,6 +4,7 @@
 //
 //  Created by Georgy on 2025-04-30.
 //
+
 import Foundation
 
 struct HotelDetail: Codable, Equatable, Sendable {

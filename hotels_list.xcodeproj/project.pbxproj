@@ -123,6 +123,14 @@
 			path = DataSource;
 			sourceTree = "<group>";
 		};
+		662CC56C2DCC121600121026 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				6653828B2DC28CAB00B5381D /* iMofasNetworkManager.swift */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
 		665382402DC0B55B00B5381D = {
 			isa = PBXGroup;
 			children = (
@@ -145,12 +153,12 @@
 				665382712DC0C19C00B5381D /* AppDelegate.swift */,
 				662CC56A2DCC0DEC00121026 /* AppStyle.swift */,
 				6604835A2DCA459A00FC6A38 /* Coordinator.swift */,
-				6653828B2DC28CAB00B5381D /* iMofasNetworkManager.swift */,
 				660483692DCB5FDB00FC6A38 /* DataSource */,
 				660483642DCB5D8400FC6A38 /* Dependencies */,
 				660483502DCA008900FC6A38 /* HotelsList */,
 				660483512DCA009100FC6A38 /* HotelDetail */,
 				665382812DC2126400B5381D /* Models */,
+				662CC56C2DCC121600121026 /* NetworkManager */,
 				665382722DC0C19C00B5381D /* Assets.xcassets */,
 				665382732DC0C19C00B5381D /* Info.plist */,
 			);

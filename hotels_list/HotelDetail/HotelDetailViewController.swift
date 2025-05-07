@@ -4,6 +4,7 @@
 //
 //  Created by Georgy on 2025-05-06.
 //
+
 import UIKit
 import Combine
 import ComposableArchitecture
@@ -96,6 +97,14 @@ class HotelDetailViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    private func createImageView() {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        imageView = iv
+    }
+    
     private func setupSubviews() {
         [
             imageView,
@@ -182,14 +191,6 @@ class HotelDetailViewController: UIViewController {
             activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
         ])
-    }
-    
-    private func createImageView() {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        imageView = iv
     }
 }
 

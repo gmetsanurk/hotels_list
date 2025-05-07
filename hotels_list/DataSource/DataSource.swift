@@ -4,6 +4,7 @@
 //
 //  Created by Georgy on 2025-05-06.
 //
+
 import UIKit
 
 protocol DataSource: Sendable {

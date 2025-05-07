@@ -4,6 +4,7 @@
 //
 //  Created by Georgy on 2025-05-07.
 //
+
 import RealmSwift
 
 class HotelSummaryRealmObject: Object {
