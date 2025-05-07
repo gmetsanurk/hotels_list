@@ -62,18 +62,20 @@ class HotelsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        observe { [weak self] in
-            // self?.tableView.reloadData()
-            print(self?.store.state.hotels)
-        }
+        observeDataSource()
+        
         view.backgroundColor = .white
         store.send(.start)
     }
 }
 
 extension HotelsListViewController {
-
+    func observeDataSource() {
+        observe { [weak self] in
+            // self?.tableView.reloadData()
+            print(self?.store.state.hotels)
+        }
+    }
 }
 
 extension HotelsListViewController: UICollectionViewDataSource {
